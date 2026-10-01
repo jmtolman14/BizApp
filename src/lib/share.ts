@@ -13,7 +13,7 @@ export function siteUrl(): string {
 
 /**
  * BizTap Oct 1
- * 🟩🟩🟨🟧🟥 677/1000
+ * 🟩🟩🟨🟧🟥 677/1200
  * https://example.com
  */
 export function buildShareText(date: string, bases: number[], total: number, url: string): string {

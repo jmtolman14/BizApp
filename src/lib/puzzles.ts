@@ -1,5 +1,5 @@
 import rawPuzzles from '../data/puzzles.json'
-import { ROUND_COUNT, type QuestionType } from './scoring'
+import { ROUND_COUNT, ROUND_SECONDS, type QuestionType } from './scoring'
 
 export interface Question {
   id: string
@@ -10,6 +10,8 @@ export interface Question {
   max: number
   /** Optional slider step for linear questions (e.g. 0.01 for prices). */
   step?: number
+  /** Optional time limit override; defaults to ROUND_SECONDS for the round. */
+  seconds?: number
   /** null = not yet verified; a puzzle containing one is never served. */
   answer: number | null
   explanation: string
@@ -26,6 +28,10 @@ export type ReadyQuestion = Question & { answer: number }
 export type ReadyPuzzle = Omit<Puzzle, 'questions'> & { questions: ReadyQuestion[] }
 
 export const ALL_PUZZLES = rawPuzzles as Puzzle[]
+
+export function secondsFor(q: Question, roundIndex: number): number {
+  return q.seconds ?? ROUND_SECONDS[roundIndex] ?? ROUND_SECONDS[ROUND_SECONDS.length - 1]
+}
 
 /** Player's local calendar date as YYYY-MM-DD. */
 export function localDateKey(d: Date = new Date()): string {

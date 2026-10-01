@@ -76,11 +76,13 @@ function formatNumber(value: number, unit: string): string {
   return plain.format(value)
 }
 
-/** "$1.65B", "21%", "13 people". Units: "$" is a prefix, "%" hugs, anything else trails. */
+const HUGGING_UNITS = new Set(['%', 'x'])
+
+/** "$1.65B", "21%", "8x", "13 people". "$" is a prefix, "%"/"x" hug, other units trail. */
 export function formatValue(value: number, unit: string): string {
   const n = formatNumber(value, unit)
-  if (unit === '$') return `$${n}`
-  if (unit === '%') return `${n}%`
+  if (unit === '$') return value < 0 ? `−$${n.slice(1)}` : `$${n}`
+  if (HUGGING_UNITS.has(unit)) return `${n}${unit}`
   if (!unit) return n
   return `${n} ${unit}`
 }
@@ -89,11 +91,37 @@ export function formatValue(value: number, unit: string): string {
 export function formatParts(value: number, unit: string): { prefix: string; number: string; suffix: string } {
   const number = formatNumber(value, unit)
   if (unit === '$') return { prefix: '$', number, suffix: '' }
-  if (unit === '%') return { prefix: '', number, suffix: '%' }
   return { prefix: '', number, suffix: unit }
 }
 
 /** Keep "$" and "%" but drop word units, for tight scale labels. */
 export function shortUnit(unit: string): string {
-  return unit === '$' || unit === '%' ? unit : ''
+  return unit === '$' || HUGGING_UNITS.has(unit) ? unit : ''
+}
+
+export function isHugging(unit: string): boolean {
+  return HUGGING_UNITS.has(unit)
+}
+
+const SUFFIX_SCALE: Record<string, number> = { k: 1e3, m: 1e6, mm: 1e6, b: 1e9, bn: 1e9, t: 1e12 }
+
+/**
+ * Parse a typed estimate: "23.76b", "$2,450", "18.9%", "8x", "1.2 million", "-60".
+ * Returns null if it isn't a number.
+ */
+export function parseEstimate(input: string): number | null {
+  const s = input
+    .trim()
+    .toLowerCase()
+    .replace(/[−–]/g, '-')
+    .replace(/[$,%\s]/g, '')
+    .replace(/x$/, '')
+    .replace(/thousand$/, 'k')
+    .replace(/million$/, 'm')
+    .replace(/billion$/, 'b')
+    .replace(/trillion$/, 't')
+  const match = /^(-?\d*\.?\d+)(k|mm|m|bn|b|t)?$/.exec(s)
+  if (!match) return null
+  const value = Number(match[1]) * (match[2] ? SUFFIX_SCALE[match[2]] : 1)
+  return Number.isFinite(value) ? value : null
 }

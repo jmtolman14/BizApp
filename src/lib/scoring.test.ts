@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import {
+  MAX_ACCURACY,
   MAX_TOTAL,
   MULTIPLIERS,
   bandFor,
@@ -8,6 +9,7 @@ import {
   logScore,
   multiplierFor,
   roundPoints,
+  speedBonus,
 } from './scoring'
 
 describe('logScore', () => {
@@ -92,7 +94,8 @@ describe('baseScore', () => {
 describe('multipliers and points', () => {
   it('uses 1x, 1x, 2x, 2x, 4x for a 1000-point maximum', () => {
     expect([...MULTIPLIERS]).toEqual([1, 1, 2, 2, 4])
-    expect(MAX_TOTAL).toBe(1000)
+    expect(MAX_ACCURACY).toBe(1000)
+    expect(MAX_TOTAL).toBe(1200)
   })
 
   it('multiplies the rounded base score', () => {
@@ -103,6 +106,27 @@ describe('multipliers and points', () => {
 
   it('throws for a round that does not exist', () => {
     expect(() => multiplierFor(5)).toThrow(RangeError)
+  })
+})
+
+describe('speedBonus', () => {
+  it('gives the full 20% for an instant answer', () => {
+    expect(speedBonus(400, 1)).toBe(80)
+  })
+
+  it('scales with time left and gives nothing at the buzzer', () => {
+    expect(speedBonus(400, 0.5)).toBe(40)
+    expect(speedBonus(400, 0)).toBe(0)
+  })
+
+  it('gives nothing for a fast but worthless guess', () => {
+    expect(speedBonus(0, 1)).toBe(0)
+  })
+
+  it('clamps bad time fractions', () => {
+    expect(speedBonus(100, 3)).toBe(20)
+    expect(speedBonus(100, -1)).toBe(0)
+    expect(speedBonus(100, Number.NaN)).toBe(0)
   })
 })
 

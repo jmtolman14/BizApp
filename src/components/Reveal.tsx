@@ -11,15 +11,19 @@ interface Props {
   roundIndex: number
   guess: number
   base: number
+  bonus: number
+  timeUsed: number
+  timeLimit: number
   isLast: boolean
   onNext: () => void
 }
 
-export default function Reveal({ question, roundIndex, guess, base, isLast, onNext }: Props) {
+export default function Reveal({ question, roundIndex, guess, base, bonus, timeUsed, timeLimit, isLast, onNext }: Props) {
   const multiplier = multiplierFor(roundIndex)
   const points = base * multiplier
   const band = bandFor(base)
-  const shown = useCountUp(points, 900, 250)
+  const shown = useCountUp(points + bonus, 900, 250)
+  const timedOut = timeUsed >= timeLimit
 
   const guessPos = valueToPosition(question, guess)
   const answerPos = valueToPosition(question, question.answer)
@@ -40,7 +44,11 @@ export default function Reveal({ question, roundIndex, guess, base, isLast, onNe
           +{shown}
         </p>
         <p className="mt-2 text-muted tabular-nums">
-          {multiplier > 1 ? `${base} base points × ${multiplier}` : `${base} of 100 points`}
+          {multiplier > 1 ? `${base} accuracy × ${multiplier}` : `${base} of 100 for accuracy`}
+          {bonus > 0 && <span className="text-teal">, +{bonus} speed bonus</span>}
+        </p>
+        <p className="text-sm text-muted tabular-nums">
+          {timedOut ? "Time's up. Your slider position was locked in." : `Answered in ${Math.round(timeUsed)}s of ${timeLimit}s`}
         </p>
       </div>
 
@@ -78,7 +86,7 @@ export default function Reveal({ question, roundIndex, guess, base, isLast, onNe
       </div>
 
       <p className="mt-5 leading-normal">{question.explanation}</p>
-      <p className="mt-2 text-xs leading-snug text-muted">Source: {question.source}</p>
+      <p className="mt-2 text-xs leading-snug text-muted">{question.source.replace(/^Case math: /, 'The math: ')}</p>
 
       <div className="mt-auto pt-6">
         <PrimaryButton onClick={onNext}>

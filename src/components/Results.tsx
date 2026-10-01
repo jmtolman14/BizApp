@@ -13,6 +13,8 @@ interface Props {
   puzzle: ReadyPuzzle
   guesses: number[]
   bases: number[]
+  bonuses: number[]
+  times: number[]
   streak: number
   bestStreak: number
 }
@@ -39,8 +41,11 @@ function hms(ms: number): string {
   return `${pad(Math.floor(s / 3600))}:${pad(Math.floor((s % 3600) / 60))}:${pad(s % 60)}`
 }
 
-export default function Results({ date, puzzle, guesses, bases, streak, bestStreak }: Props) {
-  const total = bases.reduce((sum, b, i) => sum + b * multiplierFor(i), 0)
+export default function Results({ date, puzzle, guesses, bases, bonuses, times, streak, bestStreak }: Props) {
+  const accuracy = bases.reduce((sum, b, i) => sum + b * multiplierFor(i), 0)
+  const speed = bonuses.reduce((sum, b) => sum + b, 0)
+  const total = accuracy + speed
+  const seconds = Math.round(times.reduce((sum, t) => sum + t, 0))
   const shown = useCountUp(total, 1200, 150)
   const { remaining, today } = useClock()
   const newDay = today !== date
@@ -48,8 +53,11 @@ export default function Results({ date, puzzle, guesses, bases, streak, bestStre
   return (
     <section className="anim-rise flex flex-1 flex-col">
       <p className="mt-6 text-muted">{puzzle.title}</p>
-      <p className="font-display mt-1 text-[clamp(5rem,30vw,9rem)] leading-[0.85] text-teal">{shown}</p>
+      <p className="font-display mt-1 text-[clamp(4rem,22vw,8rem)] leading-[0.85] text-teal">{shown}</p>
       <p className="mt-2 text-lg text-muted tabular-nums">out of {MAX_TOTAL}</p>
+      <p className="text-sm text-muted tabular-nums">
+        {accuracy} accuracy + {speed} speed, {Math.floor(seconds / 60)}:{String(seconds % 60).padStart(2, '0')} total time
+      </p>
 
       <div className="mt-6">
         <BandSquares bases={bases} size="lg" />
@@ -68,7 +76,7 @@ export default function Results({ date, puzzle, guesses, bases, streak, bestStre
                   You {formatValue(guesses[i], shortUnit(q.unit))}, answer {formatValue(q.answer, shortUnit(q.unit))}
                 </p>
               </div>
-              <span className={`font-display text-lg ${BAND_TEXT[band]}`}>{base * multiplierFor(i)}</span>
+              <span className={`font-display text-lg ${BAND_TEXT[band]}`}>{base * multiplierFor(i) + (bonuses[i] ?? 0)}</span>
             </li>
           )
         })}

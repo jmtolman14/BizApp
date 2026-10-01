@@ -2,16 +2,22 @@ import { STORAGE_PREFIX } from '../config'
 import { addDays } from './puzzles'
 
 /**
- * Saved state for one calendar day. `guesses`/`bases` grow as rounds are locked
- * in; `seen` counts reveals the player has dismissed with Next. Base scores are
- * frozen at lock-in so editing puzzles.json can't change a finished score.
+ * Saved state for one calendar day. `guesses`/`bases`/`bonuses`/`times` grow as
+ * rounds are locked in; `seen` counts reveals the player has dismissed with
+ * Next. Scores are frozen at lock-in so editing puzzles.json can't change a
+ * finished score. `roundStartedAt` is wall-clock ms, so a refresh or a trip to
+ * the calculator app doesn't pause the timer; `draft` is the unlocked guess.
  */
 export interface DayState {
   date: string
   puzzleDate: string // which puzzle was served (differs from `date` on fallback days)
   guesses: number[]
   bases: number[]
+  bonuses: number[]
+  times: number[] // seconds used per round
   seen: number
+  roundStartedAt: number | null
+  draft: number | null
 }
 
 export interface Stats {
@@ -45,7 +51,7 @@ function write(key: string, value: unknown): void {
 
 export function loadDay(date: string): DayState | null {
   const s = read<DayState>(dayKey(date))
-  if (!s || s.date !== date || !Array.isArray(s.guesses) || !Array.isArray(s.bases)) return null
+  if (!s || s.date !== date || ![s.guesses, s.bases, s.bonuses, s.times].every(Array.isArray)) return null
   return s
 }
 

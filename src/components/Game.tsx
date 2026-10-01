@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { APP_NAME } from '../config'
-import { localDateKey, puzzleForDate, shortDateLabel } from '../lib/puzzles'
-import { MULTIPLIERS, ROUND_COUNT, baseScore } from '../lib/scoring'
+import { localDateKey, puzzleForDate, secondsFor, shortDateLabel } from '../lib/puzzles'
+import { MULTIPLIERS, ROUND_COUNT, SPEED_BONUS_RATE, baseScore, roundPoints, speedBonus } from '../lib/scoring'
 import { loadDay, loadStats, liveStreak, recordCompletion, saveDay, type DayState } from '../lib/storage'
 import { BandSquares, PrimaryButton } from './ui'
 import Results from './Results'
@@ -18,10 +18,10 @@ export default function Game() {
     const saved = loadDay(date)
     // Keep a finished game no matter what; drop an unfinished one if the puzzle changed.
     if (saved && (saved.puzzleDate === puzzle.date || saved.bases.length === ROUND_COUNT)) return saved
-    return { date, puzzleDate: puzzle.date, guesses: [], bases: [], seen: 0 }
+    return { date, puzzleDate: puzzle.date, guesses: [], bases: [], bonuses: [], times: [], seen: 0, roundStartedAt: null, draft: null }
   })
   const [stats, setStats] = useState(loadStats)
-  const [started, setStarted] = useState(day.guesses.length > 0)
+  const [started, setStarted] = useState(day.guesses.length > 0 || day.roundStartedAt !== null)
 
   useEffect(() => {
     if (started) saveDay(day)
@@ -32,20 +32,34 @@ export default function Game() {
 
   const lockIn = (guess: number) => {
     const question = puzzle.questions[locked]
+    const limit = secondsFor(question, locked)
+    const used = Math.min(limit, Math.max(0, (Date.now() - (day.roundStartedAt ?? Date.now())) / 1000))
+    const base = baseScore(question, guess)
     const next: DayState = {
       ...day,
       guesses: [...day.guesses, guess],
-      bases: [...day.bases, baseScore(question, guess)],
+      bases: [...day.bases, base],
+      bonuses: [...day.bonuses, speedBonus(roundPoints(base, locked), 1 - used / limit)],
+      times: [...day.times, Math.round(used * 10) / 10],
+      roundStartedAt: null,
+      draft: null,
     }
     setDay(next)
     if (next.bases.length === ROUND_COUNT) setStats(recordCompletion(date))
   }
 
-  const advance = () => setDay((d) => ({ ...d, seen: d.seen + 1 }))
+  // The clock for a round starts the moment its question is shown.
+  const advance = () =>
+    setDay((d) => ({ ...d, seen: d.seen + 1, roundStartedAt: d.seen + 1 < ROUND_COUNT ? Date.now() : null }))
+
+  const start = () => {
+    setDay((d) => ({ ...d, roundStartedAt: d.roundStartedAt ?? Date.now() }))
+    setStarted(true)
+  }
 
   let screen
   if (!started) {
-    screen = <Intro title={puzzle.title} onStart={() => setStarted(true)} />
+    screen = <Intro title={puzzle.title} onStart={start} />
   } else if (day.seen < locked) {
     const i = day.seen
     screen = (
@@ -55,12 +69,26 @@ export default function Game() {
         roundIndex={i}
         guess={day.guesses[i]}
         base={day.bases[i]}
+        bonus={day.bonuses[i]}
+        timeUsed={day.times[i]}
+        timeLimit={secondsFor(puzzle.questions[i], i)}
         isLast={i === ROUND_COUNT - 1}
         onNext={advance}
       />
     )
   } else if (!finished) {
-    screen = <Round key={`round-${locked}`} question={puzzle.questions[locked]} roundIndex={locked} onLock={lockIn} />
+    screen = (
+      <Round
+        key={`round-${locked}`}
+        question={puzzle.questions[locked]}
+        roundIndex={locked}
+        startedAt={day.roundStartedAt}
+        seconds={secondsFor(puzzle.questions[locked], locked)}
+        draft={day.draft}
+        onDraft={(v) => setDay((d) => ({ ...d, draft: v }))}
+        onLock={lockIn}
+      />
+    )
   } else {
     screen = (
       <Results
@@ -68,6 +96,8 @@ export default function Game() {
         puzzle={puzzle}
         guesses={day.guesses}
         bases={day.bases}
+        bonuses={day.bonuses}
+        times={day.times}
         streak={liveStreak(stats, localDateKey())}
         bestStreak={stats.bestStreak}
       />
@@ -101,12 +131,16 @@ function Intro({ title, onStart }: { title: string; onStart: () => void }) {
       </div>
 
       <ul className="mt-10 space-y-4 text-[1.05rem] leading-snug">
-        <li>Five numbers to estimate. Drag the slider, then lock in your guess.</li>
+        <li>Five case interview math problems. Every number you need is in the question.</li>
         <li>
-          Closer guesses earn more, up to 100 points a round. Later rounds are harder and count{' '}
+          The clock starts when each question appears. Answer fast for up to {SPEED_BONUS_RATE * 100}% bonus
+          points. When time runs out, whatever is on the slider locks in.
+        </li>
+        <li>
+          Closer answers score more. Later rounds are harder and count{' '}
           {MULTIPLIERS.slice(2).map((m) => `${m}×`).join(', ')}.
         </li>
-        <li>One shot per day. Everyone gets the same puzzle.</li>
+        <li>One shot per day, the same puzzle for everyone. Do the math in your head.</li>
       </ul>
 
       <div className="mt-auto pt-8">
