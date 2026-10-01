@@ -1,0 +1,143 @@
+@import '@fontsource-variable/archivo/wdth.css';
+@import 'tailwindcss';
+
+@theme {
+  --font-sans: 'Archivo Variable', ui-sans-serif, system-ui, -apple-system, sans-serif;
+
+  --color-ink: #061416;
+  --color-panel: #0c2124;
+  --color-line: #1a383c;
+  --color-teal: #19e3c4;
+  --color-teal-dim: #0f8f7c;
+  --color-text: #e6f4f1;
+  --color-muted: #86a5a2;
+
+  --color-band-green: #3ddc84;
+  --color-band-yellow: #f6d33f;
+  --color-band-orange: #ff9442;
+  --color-band-red: #ff5a5f;
+}
+
+@layer base {
+  html {
+    background: var(--color-ink);
+    color: var(--color-text);
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+  }
+  html,
+  body {
+    overflow-x: hidden;
+    overscroll-behavior-y: none;
+  }
+  body {
+    font-family: var(--font-sans);
+    min-height: 100dvh;
+  }
+  button {
+    cursor: pointer;
+    touch-action: manipulation;
+  }
+  :focus-visible {
+    outline: 3px solid var(--color-teal);
+    outline-offset: 3px;
+  }
+}
+
+@utility font-display {
+  font-stretch: 125%;
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+@utility font-wide {
+  font-stretch: 112%;
+}
+
+/* Safe-area aware shell: content never sits under the notch or home bar. */
+@utility app-shell {
+  min-height: 100dvh;
+  padding-top: max(env(safe-area-inset-top), 0.75rem);
+  padding-bottom: max(env(safe-area-inset-bottom), 1rem);
+  padding-left: max(env(safe-area-inset-left), 1.25rem);
+  padding-right: max(env(safe-area-inset-right), 1.25rem);
+}
+
+/* Big, thumb-friendly slider. --fill is set inline (0%–100%). */
+.estimate-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 56px;
+  background: transparent;
+  touch-action: pan-y;
+}
+.estimate-slider::-webkit-slider-runnable-track {
+  height: 12px;
+  border-radius: 999px;
+  background: linear-gradient(to right, var(--color-teal) var(--fill), var(--color-line) var(--fill));
+}
+.estimate-slider::-moz-range-track {
+  height: 12px;
+  border-radius: 999px;
+  background: linear-gradient(to right, var(--color-teal) var(--fill), var(--color-line) var(--fill));
+}
+.estimate-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 40px;
+  height: 40px;
+  margin-top: -14px;
+  border-radius: 999px;
+  background: var(--color-text);
+  border: 6px solid var(--color-teal);
+  box-shadow: 0 0 0 6px rgb(25 227 196 / 0.15);
+}
+.estimate-slider::-moz-range-thumb {
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  background: var(--color-text);
+  border: 6px solid var(--color-teal);
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes pop {
+  0% {
+    transform: scale(0.4);
+  }
+  70% {
+    transform: scale(1.15);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+.anim-rise {
+  animation: rise 320ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+.anim-pop {
+  animation: pop 380ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+.marker-slide {
+  transition: left 700ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .anim-rise,
+  .anim-pop {
+    animation: none;
+  }
+  .marker-slide {
+    transition: none;
+  }
+}

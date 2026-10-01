@@ -1,0 +1,446 @@
+[
+  {
+    "date": "2026-10-01",
+    "title": "Apple & friends",
+    "questions": [
+      {
+        "id": "2026-10-01-r1",
+        "prompt": "What does Costco charge for its hot dog and soda combo?",
+        "unit": "$",
+        "type": "linear",
+        "min": 0,
+        "max": 10,
+        "step": 0.05,
+        "answer": 1.5,
+        "explanation": "$1.50, the same price since 1985. Costco treats it as a loss leader that gets members through the door.",
+        "source": "Costco food court pricing; widely reported unchanged since 1985"
+      },
+      {
+        "id": "2026-10-01-r2",
+        "prompt": "How much did Facebook pay to acquire Instagram in 2012?",
+        "unit": "$",
+        "type": "log",
+        "min": 10000000,
+        "max": 100000000000,
+        "answer": 1000000000,
+        "explanation": "About $1 billion in cash and stock. It looked expensive at the time and now looks like one of the best deals ever made.",
+        "source": "Facebook announcement, April 2012"
+      },
+      {
+        "id": "2026-10-01-r3",
+        "prompt": "How many employees did Instagram have when Facebook bought it?",
+        "unit": "people",
+        "type": "log",
+        "min": 1,
+        "max": 10000,
+        "answer": 13,
+        "explanation": "Just 13. That works out to roughly $77 million of deal value per employee.",
+        "source": "Widely reported at the time of the April 2012 acquisition"
+      },
+      {
+        "id": "2026-10-01-r4",
+        "prompt": "What share of Apple's revenue came from the iPhone in fiscal 2023?",
+        "unit": "%",
+        "type": "linear",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "answer": 52,
+        "explanation": "About 52%: $200.6B of $383.3B. Services, Mac, iPad and wearables together make up the other half.",
+        "source": "Apple FY2023 Form 10-K (net sales by category)"
+      },
+      {
+        "id": "2026-10-01-r5",
+        "prompt": "On average, how much revenue did Apple bring in per second in fiscal 2023?",
+        "unit": "$",
+        "type": "log",
+        "min": 10,
+        "max": 10000000,
+        "answer": 12154,
+        "explanation": "About $12,000 a second. $383.3B divided by the roughly 31.5 million seconds in a year.",
+        "source": "Derived: Apple FY2023 Form 10-K revenue $383.285B ÷ 31,536,000 seconds"
+      }
+    ]
+  },
+  {
+    "date": "2026-10-02",
+    "title": "Fast food economics",
+    "questions": [
+      {
+        "id": "2026-10-02-r1",
+        "prompt": "What does a Costco rotisserie chicken cost?",
+        "unit": "$",
+        "type": "linear",
+        "min": 0,
+        "max": 20,
+        "step": 0.01,
+        "answer": 4.99,
+        "explanation": "$4.99, held for years even as costs rose. Like the hot dog, it is a deliberate traffic driver placed at the back of the store.",
+        "source": "Costco warehouse pricing; widely reported at $4.99 since 2009"
+      },
+      {
+        "id": "2026-10-02-r2",
+        "prompt": "What percentage of McDonald's restaurants are run by franchisees?",
+        "unit": "%",
+        "type": "linear",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "answer": 95,
+        "explanation": "About 95%. McDonald's earns much of its money as a landlord and royalty collector, not by flipping burgers itself.",
+        "source": "McDonald's Form 10-K (approximately 95% of restaurants franchised)"
+      },
+      {
+        "id": "2026-10-02-r3",
+        "prompt": "What is the US federal corporate income tax rate?",
+        "unit": "%",
+        "type": "linear",
+        "min": 0,
+        "max": 50,
+        "step": 0.5,
+        "answer": 21,
+        "explanation": "21%, a flat rate set by the 2017 Tax Cuts and Jobs Act. Before 2018 the top rate was 35%.",
+        "source": "Tax Cuts and Jobs Act of 2017, effective 2018"
+      },
+      {
+        "id": "2026-10-02-r4",
+        "prompt": "About how many McDonald's restaurants are there in the US?",
+        "unit": "restaurants",
+        "type": "log",
+        "min": 100,
+        "max": 1000000,
+        "answer": 13500,
+        "explanation": "Roughly 13,500, about one for every 25,000 Americans. That is still only about a third of McDonald's 40,000+ locations worldwide.",
+        "source": "McDonald's Form 10-K, US restaurant count (~13,500 at end of 2023)"
+      },
+      {
+        "id": "2026-10-02-r5",
+        "prompt": "How many customers does McDonald's serve worldwide on an average day?",
+        "unit": "people",
+        "type": "log",
+        "min": 1000000,
+        "max": 1000000000,
+        "answer": 69000000,
+        "explanation": "About 69 million a day. That is roughly 1,700 customers per restaurant per day across 40,000+ locations.",
+        "source": "McDonald's corporate site ('approximately 69 million customers daily')"
+      }
+    ]
+  },
+  {
+    "date": "2026-10-03",
+    "title": "Big deals",
+    "questions": [
+      {
+        "id": "2026-10-03-r1",
+        "prompt": "How much did Google pay for YouTube in 2006?",
+        "unit": "$",
+        "type": "log",
+        "min": 10000000,
+        "max": 100000000000,
+        "answer": 1650000000,
+        "explanation": "$1.65 billion in stock, when YouTube was less than two years old. YouTube now brings in tens of billions in ad revenue a year.",
+        "source": "Google press release, October 2006"
+      },
+      {
+        "id": "2026-10-03-r2",
+        "prompt": "What was Amazon's IPO price per share in 1997?",
+        "unit": "$",
+        "type": "linear",
+        "min": 0,
+        "max": 100,
+        "step": 0.5,
+        "answer": 18,
+        "explanation": "$18 a share. After four stock splits, one IPO share has become 240 shares, worth tens of thousands of dollars.",
+        "source": "Amazon IPO, May 15, 1997"
+      },
+      {
+        "id": "2026-10-03-r3",
+        "prompt": "How many employees did WhatsApp have when Facebook bought it in 2014?",
+        "unit": "people",
+        "type": "log",
+        "min": 1,
+        "max": 100000,
+        "answer": 55,
+        "explanation": "About 55 people, serving 450 million monthly users. That is roughly 8 million users per employee.",
+        "source": "Widely reported at the February 2014 acquisition"
+      },
+      {
+        "id": "2026-10-03-r4",
+        "prompt": "What price did Microsoft agree to pay for Activision Blizzard?",
+        "unit": "$",
+        "type": "log",
+        "min": 100000000,
+        "max": 1000000000000,
+        "answer": 68700000000,
+        "explanation": "$68.7 billion, the largest acquisition in video game history. Regulators reviewed it for nearly two years before it closed in 2023.",
+        "source": "Microsoft announcement, January 2022"
+      },
+      {
+        "id": "2026-10-03-r5",
+        "prompt": "Walmart's annual revenue is about $650B. How much is that per day?",
+        "unit": "$",
+        "type": "log",
+        "min": 10000000,
+        "max": 100000000000,
+        "answer": 1776000000,
+        "explanation": "About $1.8 billion every day. $648.1B ÷ 365 days, or roughly $20,000 every second.",
+        "source": "Derived: Walmart FY2024 (ended Jan 31, 2024) total revenue $648.1B ÷ 365"
+      }
+    ]
+  },
+  {
+    "date": "2026-10-04",
+    "title": "Inside the warehouse",
+    "questions": [
+      {
+        "id": "2026-10-04-r1",
+        "prompt": "What price is printed on a big can of AriZona Iced Tea?",
+        "unit": "$",
+        "type": "linear",
+        "min": 0,
+        "max": 5,
+        "step": 0.01,
+        "answer": 0.99,
+        "explanation": "99¢, printed on the can since the 1990s. The founders have refused to raise it, absorbing cost increases instead.",
+        "source": "AriZona Beverages; widely reported 99¢ printed price since 1992"
+      },
+      {
+        "id": "2026-10-04-r2",
+        "prompt": "About how many different products does a typical Costco carry?",
+        "unit": "products",
+        "type": "log",
+        "min": 100,
+        "max": 1000000,
+        "answer": 4000,
+        "explanation": "About 4,000. A typical supermarket stocks tens of thousands, and Costco's narrow selection gives it huge buying power per item.",
+        "source": "Costco Form 10-K ('approximately 4,000 active items' per warehouse)"
+      },
+      {
+        "id": "2026-10-04-r3",
+        "prompt": "How many Walmart stores are there in the US (not counting Sam's Club)?",
+        "unit": "stores",
+        "type": "log",
+        "min": 100,
+        "max": 1000000,
+        "answer": 4600,
+        "explanation": "About 4,600. Walmart says roughly 90% of Americans live within 10 miles of one.",
+        "source": "Walmart Form 10-K, Walmart U.S. segment (~4,600 stores, FY2024)"
+      },
+      {
+        "id": "2026-10-04-r4",
+        "prompt": "What percentage of Costco's total revenue comes from membership fees?",
+        "unit": "%",
+        "type": "linear",
+        "min": 0,
+        "max": 30,
+        "step": 0.1,
+        "answer": 1.9,
+        "explanation": "Under 2%: $4.6B of $242.3B in fiscal 2023. But those fees are nearly pure profit, worth more than half of Costco's operating income.",
+        "source": "Costco FY2023 Form 10-K (membership fees $4,580M; total revenue $242,290M)"
+      },
+      {
+        "id": "2026-10-04-r5",
+        "prompt": "How many gallons of gasoline does the US use per day?",
+        "unit": "gallons",
+        "type": "log",
+        "min": 1000000,
+        "max": 10000000000,
+        "answer": 370000000,
+        "explanation": "About 370 million gallons a day. That is roughly 1.1 gallons per American, every day.",
+        "source": "US EIA, 'How much gasoline does the United States consume?' (~8.8–8.9M barrels/day in 2022–2023 × 42 gallons)"
+      }
+    ]
+  },
+  {
+    "date": "2026-10-05",
+    "title": "Show business",
+    "questions": [
+      {
+        "id": "2026-10-05-r1",
+        "prompt": "What did the average US wedding cost in 2023?",
+        "unit": "$",
+        "type": "linear",
+        "min": 0,
+        "max": 100000,
+        "step": 500,
+        "answer": 35000,
+        "explanation": "About $35,000. The venue is usually the biggest single line item.",
+        "source": "The Knot 2023 Real Weddings Study"
+      },
+      {
+        "id": "2026-10-05-r2",
+        "prompt": "What did a 30-second ad during the 2024 Super Bowl cost?",
+        "unit": "$",
+        "type": "log",
+        "min": 10000,
+        "max": 100000000,
+        "answer": 7000000,
+        "explanation": "About $7 million, before paying to actually make the ad. With 120M+ viewers, that is still around 6 cents per viewer.",
+        "source": "CBS / widely reported Super Bowl LVIII ad pricing"
+      },
+      {
+        "id": "2026-10-05-r3",
+        "prompt": "How much did Taylor Swift's Eras Tour gross in ticket sales?",
+        "unit": "$",
+        "type": "log",
+        "min": 10000000,
+        "max": 100000000000,
+        "answer": 2077000000,
+        "explanation": "About $2.08 billion over 149 shows, the first tour ever to pass $2 billion.",
+        "source": "Billboard Boxscore, final Eras Tour gross (December 2024)"
+      },
+      {
+        "id": "2026-10-05-r4",
+        "prompt": "What share of Spotify's monthly users pay for Premium?",
+        "unit": "%",
+        "type": "linear",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "answer": 39,
+        "explanation": "About 39%: 263M subscribers out of 675M monthly users at the end of 2024. The free, ad-supported tier is the funnel into paid.",
+        "source": "Spotify Q4 2024 shareholder deck (675M MAU, 263M subscribers)"
+      },
+      {
+        "id": "2026-10-05-r5",
+        "prompt": "How many weddings take place in the US each year?",
+        "unit": "weddings",
+        "type": "log",
+        "min": 10000,
+        "max": 100000000,
+        "answer": 2070000,
+        "explanation": "About 2.1 million. At ~$35,000 each, that is a $70B+ industry.",
+        "source": "CDC National Center for Health Statistics, marriages in 2022 (2,065,905)"
+      }
+    ]
+  },
+  {
+    "date": "2026-10-06",
+    "title": "Big Tech by the numbers",
+    "questions": [
+      {
+        "id": "2026-10-06-r1",
+        "prompt": "What is the US federal minimum wage per hour?",
+        "unit": "$",
+        "type": "linear",
+        "min": 0,
+        "max": 20,
+        "step": 0.05,
+        "answer": 7.25,
+        "explanation": "$7.25, unchanged since 2009. Most states and many cities now set a higher minimum of their own.",
+        "source": "Fair Labor Standards Act; US Department of Labor"
+      },
+      {
+        "id": "2026-10-06-r2",
+        "prompt": "How many full-time employees did Apple have at the end of fiscal 2023?",
+        "unit": "people",
+        "type": "log",
+        "min": 1000,
+        "max": 10000000,
+        "answer": 161000,
+        "explanation": "About 161,000. That is about $2.4 million in revenue per employee.",
+        "source": "Apple FY2023 Form 10-K (approximately 161,000 full-time equivalent employees)"
+      },
+      {
+        "id": "2026-10-06-r3",
+        "prompt": "What was Apple's gross margin in fiscal 2023?",
+        "unit": "%",
+        "type": "linear",
+        "min": 0,
+        "max": 100,
+        "step": 0.5,
+        "answer": 44.1,
+        "explanation": "44.1%. Products ran around 36% while Services ran around 71%, which is why Apple keeps pushing subscriptions.",
+        "source": "Apple FY2023 Form 10-K (total gross margin percentage 44.1%)"
+      },
+      {
+        "id": "2026-10-06-r4",
+        "prompt": "AWS is about 16% of Amazon's revenue. What share of Amazon's operating income did it produce in 2023?",
+        "unit": "%",
+        "type": "linear",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "answer": 67,
+        "explanation": "About 67%: $24.6B of $36.9B. The cloud business funds the much thinner-margin retail operation.",
+        "source": "Amazon 2023 Form 10-K segment results (AWS operating income $24.631B; total $36.852B)"
+      },
+      {
+        "id": "2026-10-06-r5",
+        "prompt": "How many trips did Uber complete in 2023 (rides plus deliveries)?",
+        "unit": "trips",
+        "type": "log",
+        "min": 10000000,
+        "max": 1000000000000,
+        "answer": 9440000000,
+        "explanation": "About 9.4 billion, roughly 26 million trips a day, or more than one for every person on Earth.",
+        "source": "Uber Q4 2023 earnings release (full-year trips 9.44 billion)"
+      }
+    ]
+  },
+  {
+    "date": "2026-10-07",
+    "title": "Main Street",
+    "questions": [
+      {
+        "id": "2026-10-07-r1",
+        "prompt": "What share of new US businesses fail within their first year?",
+        "unit": "%",
+        "type": "linear",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "answer": 20,
+        "explanation": "About 20%. Roughly half are gone by year five, so the first year is not as deadly as people think.",
+        "source": "US Bureau of Labor Statistics, Business Employment Dynamics establishment survival data"
+      },
+      {
+        "id": "2026-10-07-r2",
+        "prompt": "What share of US wage and salary workers belonged to a union in 2024?",
+        "unit": "%",
+        "type": "linear",
+        "min": 0,
+        "max": 50,
+        "step": 0.1,
+        "answer": 9.9,
+        "explanation": "9.9%, a record low and down from about 20% in 1983. Public-sector workers unionize at more than five times the private-sector rate.",
+        "source": "US Bureau of Labor Statistics, Union Members 2024 (January 2025)"
+      },
+      {
+        "id": "2026-10-07-r3",
+        "prompt": "What is Costco's annual Gold Star (basic) membership fee in the US?",
+        "unit": "$",
+        "type": "linear",
+        "min": 0,
+        "max": 200,
+        "step": 1,
+        "answer": 65,
+        "explanation": "$65 a year, raised from $60 in September 2024. Costco raises it only about every five or six years, and over 90% of US and Canadian members renew.",
+        "source": "Costco announcement, July 2024 (fee increase effective Sept 1, 2024)"
+      },
+      {
+        "id": "2026-10-07-r4",
+        "prompt": "What share of US GDP is consumer spending?",
+        "unit": "%",
+        "type": "linear",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "answer": 68,
+        "explanation": "About 68%. That is why economists watch retail sales and consumer confidence so closely.",
+        "source": "US Bureau of Economic Analysis, personal consumption expenditures as a share of GDP"
+      },
+      {
+        "id": "2026-10-07-r5",
+        "prompt": "How many pieces of mail does the US Postal Service deliver on an average day?",
+        "unit": "pieces",
+        "type": "log",
+        "min": 1000000,
+        "max": 10000000000,
+        "answer": 318000000,
+        "explanation": "About 318 million a day, or 116 billion a year, to more than 165 million addresses.",
+        "source": "USPS Postal Facts, FY2023 (116.1B mail pieces; ~318M per day)"
+      }
+    ]
+  }
+]
